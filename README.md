@@ -1,6 +1,8 @@
 # ComputerAI
 A computer companion to get that feeling that you're in the future.
 
+Features: You can speak via microphone and get an answer with a voice of choice. A transcribed version is also displayed in the console.
+
 * Set up your Azure Recognition Service API key in Constants.SubscriptionKey
 * Set up your OpenAI API key in Constants.OpenAIApiKey
 * Set Personality in Constants.Personality
