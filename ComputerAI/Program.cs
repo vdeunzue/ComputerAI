@@ -22,7 +22,7 @@ class Program
                     continue;
                 }
 
-                Console.WriteLine(string.Format("You: {0}", input));
+                Console.WriteLine(string.Format("You: {0}\n", input));
 
                 await AI.AnswerHuman(input);
             }
