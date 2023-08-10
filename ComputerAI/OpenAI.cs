@@ -1,16 +1,28 @@
-﻿using OpenAI_API.Completions;
-using OpenAI_API;
+﻿using OpenAI_API;
+using OpenAI_API.Chat;
 
 namespace ComputerAI
 {
     public static class OpenAI
     {
-        public static async Task<CompletionResult> GetResponseAsync(string inputText)
+        private static Conversation conversation;
+
+        public static async Task<string> GetResponseAsync(string inputText)
         {
-            inputText = Constants.Personality + inputText;
             var openAI = new OpenAIAPI(Constants.OpenAIApiKey);
+
+            if (conversation == null)
+            {
+                conversation = openAI.Chat.CreateConversation(new ChatRequest());
+                conversation.AppendSystemMessage(Constants.Personality);
+            }
+
             var prompt = $"{inputText}\nAI:";
-            var response = await openAI.Completions.CreateCompletionAsync(prompt, model: new OpenAI_API.Models.Model("text-davinci-003"), max_tokens: Constants.MaxTokens);
+            conversation.AppendUserInput(prompt);
+
+
+            var response = await conversation.GetResponseFromChatbotAsync();
+
             return response;
         }
     }
