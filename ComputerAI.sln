@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerAI", "ComputerAI\ComputerAI.csproj", "{AEE67DC2-A322-4D8E-965B-7A763F8EA04B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEE67DC2-A322-4D8E-965B-7A763F8EA04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEE67DC2-A322-4D8E-965B-7A763F8EA04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEE67DC2-A322-4D8E-965B-7A763F8EA04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEE67DC2-A322-4D8E-965B-7A763F8EA04B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC06D390-C815-4B54-8694-6E7DD8139B39}
+	EndGlobalSection
+EndGlobal
