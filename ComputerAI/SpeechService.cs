@@ -26,6 +26,7 @@ namespace ComputerAI
         {
             var speechConfig = SpeechConfig.FromSubscription(Constants.SubscriptionKey, Constants.ServiceRegion);
             var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+            speechConfig.SetProfanity(ProfanityOption.Raw);
 
             using (var recognizer = new SpeechRecognizer(speechConfig, audioConfig))
             {
