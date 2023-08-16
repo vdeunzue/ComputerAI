@@ -13,16 +13,25 @@ class Program
 
         while (true)
         {
-            if (GetAsyncKeyState(Constants.ChatKey) != 0)
+            if (GetAsyncKeyState(Constants.ChatKey) != 0 || Constants.IsTextInteraction)
             {
-                var input = await SpeechService.SpeechToTextAsync();
+                if (Constants.IsTextInteraction)
+                {
+                    Console.Write("You: ");
+                    Console.WriteLine();
+                }
+
+                var input = Constants.IsVoiceInteraction ? await SpeechService.SpeechToTextAsync() : Console.ReadLine();
 
                 if (string.IsNullOrEmpty(input))
                 {
                     continue;
                 }
 
-                Console.WriteLine(string.Format("You: {0}\n", input));
+                if (Constants.IsVoiceInteraction)
+                {
+                    Console.WriteLine(string.Format("You: {0}\n", input));
+                }
 
                 await AI.AnswerHuman(input);
             }
