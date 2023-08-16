@@ -12,7 +12,15 @@
         public static async Task AnswerHuman(string input)
         {
             var response = await OpenAI.GetResponseAsync(input);
-            Console.WriteLine(string.Format("Arya: {0}\n", response.Replace("\n", string.Empty)));
+
+            int index = response.IndexOf("\n");
+
+            if (index != -1)
+            {
+                response = response.Remove(index, "\n".Length).Insert(index, string.Empty);
+            }
+
+            Console.WriteLine(string.Format("Arya: {0}\n", response));
             await SpeechService.TextToSpeechAsync(response);
         }
     }

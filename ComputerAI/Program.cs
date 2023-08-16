@@ -18,7 +18,6 @@ class Program
                 if (Constants.IsTextInteraction)
                 {
                     Console.Write("You: ");
-                    Console.WriteLine();
                 }
 
                 var input = Constants.IsVoiceInteraction ? await SpeechService.SpeechToTextAsync() : Console.ReadLine();
