@@ -22,6 +22,11 @@ class Program
 
                 var input = Constants.IsVoiceInteraction ? await SpeechService.SpeechToTextAsync() : Console.ReadLine();
 
+                if (Constants.IsTextInteraction)
+                {
+                    Console.WriteLine();
+                }
+
                 if (string.IsNullOrEmpty(input))
                 {
                     continue;
