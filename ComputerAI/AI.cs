@@ -5,6 +5,7 @@ namespace ComputerAI
         private static AnthropicAI? anthropicAI;
         private static SystemMonitor? systemMonitor;
         private static FileSystemMonitor? fileMonitor;
+        private static ActivityMonitor? activityMonitor;
         private static SystemMetrics? lastMetrics;
         private static DateTime lastSystemCheck = DateTime.MinValue;
         private static List<string> recentAlerts = new();
@@ -40,6 +41,14 @@ namespace ComputerAI
                 fileMonitor.FileChanged += OnFileChanged;
                 fileMonitor.StartWatchingDesktop();
                 Console.WriteLine("[AI] File system monitoring enabled");
+            }
+
+            // Initialize activity monitoring
+            if (Constants.EnableActivityMonitoring)
+            {
+                activityMonitor = new ActivityMonitor();
+                Console.WriteLine("[AI] Activity & screen monitoring enabled");
+                Console.WriteLine("[AI] Random commentary enabled (every 2-5 min)");
             }
         }
 
@@ -101,6 +110,13 @@ namespace ComputerAI
                 {
                     contextualInput += $"\n[Recent Alerts: {string.Join("; ", recentAlerts.TakeLast(3))}]";
                 }
+            }
+
+            // Add activity context if available
+            if (activityMonitor != null && Constants.EnableActivityMonitoring)
+            {
+                var activityContext = activityMonitor.GetActivityContext();
+                contextualInput += $"\n[Current Activity: {activityContext}]";
             }
 
             var response = await GetResponse(contextualInput, lastMetrics);
@@ -177,10 +193,24 @@ namespace ComputerAI
             }
         }
 
+        public static async Task RandomCommentary()
+        {
+            if (activityMonitor == null || !Constants.EnableRandomCommentary)
+                return;
+
+            var commentary = await activityMonitor.GenerateRandomCommentary(async (input) => await GetResponse(input));
+            if (commentary != null)
+            {
+                Console.WriteLine($"\n[💭 Random Thought]");
+                await OutputResponse("Arya", commentary);
+            }
+        }
+
         public static void Cleanup()
         {
             systemMonitor?.Dispose();
             fileMonitor?.StopWatching();
+            activityMonitor?.Dispose();
         }
     }
 }

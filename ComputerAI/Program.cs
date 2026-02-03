@@ -88,6 +88,9 @@ class Program
                 {
                     proactiveCheckCounter = 0;
                     await AI.ProactiveCheck();
+
+                    // Also try random commentary
+                    await AI.RandomCommentary();
                 }
 
                 Thread.Sleep(200);

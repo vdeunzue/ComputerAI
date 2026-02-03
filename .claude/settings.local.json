@@ -6,7 +6,10 @@
       "Bash(dotnet nuget:*)",
       "Bash(dotnet restore:*)",
       "Bash(dotnet run:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nComputerAI v2.0 - Enhanced Edition with system monitoring and autonomous capabilities\n\nMajor Features:\n- Upgraded to Anthropic Claude API with Haiku model support\n- Added comprehensive system monitoring \\(CPU, RAM, disk, processes\\)\n- Implemented file system watcher for Desktop/Documents/Downloads\n- Created autonomous action executor \\(commands, files, apps, clipboard\\)\n- Added proactive health checks and anomaly detection\n- Enhanced personality system with concise responses\n- Upgraded to .NET 8.0 with Windows Forms support\n\nNew Components:\n- SystemMonitor.cs: Real-time system metrics and anomaly detection\n- FileSystemMonitor.cs: File change detection with event queue\n- ActionExecutor.cs: System interaction and command execution\n- AnthropicAI.cs: Direct HTTP API integration with Claude\n\nEnhanced Features:\n- Slash commands \\(/status, /clear, /exit\\)\n- Context-aware AI responses with system state\n- Beautiful startup banner and improved UX\n- Comprehensive documentation \\(README, QUICKSTART, CHANGELOG\\)\n\nTechnical Improvements:\n- Updated from .NET 6.0 to .NET 8.0-windows\n- Added System.Management for WMI queries\n- Added Performance Counter support\n- Modular architecture with separation of concerns\n- Improved error handling throughout\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)",
+      "Bash(taskkill:*)"
     ]
   }
 }
