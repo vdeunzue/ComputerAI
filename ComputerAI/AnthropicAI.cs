@@ -55,6 +55,15 @@ namespace ComputerAI
                 var apiResponse = JsonSerializer.Deserialize<AnthropicResponse>(responseBody);
                 var aiResponse = apiResponse?.Content?.FirstOrDefault()?.Text ?? "I'm having trouble responding.";
 
+                // Force brevity - take only first sentence if response is too long
+                if (aiResponse.Length > 150)
+                {
+                    var firstSentence = aiResponse.Split(new[] { ". ", "! ", "? " }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                    aiResponse = firstSentence ?? aiResponse.Substring(0, Math.Min(150, aiResponse.Length));
+                    if (!aiResponse.EndsWith(".") && !aiResponse.EndsWith("!") && !aiResponse.EndsWith("?"))
+                        aiResponse += ".";
+                }
+
                 // Add assistant response to history
                 conversationHistory.Add(new ConversationMessage { Role = "assistant", Content = aiResponse });
 

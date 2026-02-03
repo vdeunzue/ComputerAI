@@ -82,6 +82,14 @@ namespace ComputerAI
 
         public static async Task AnswerHuman(string input)
         {
+            // Check for action commands first
+            var actionResult = TryExecuteAction(input);
+            if (actionResult != null)
+            {
+                await OutputResponse("Arya", actionResult);
+                return;
+            }
+
             // Check if it's time for a system update
             bool includeSystemUpdate = false;
             if (systemMonitor != null &&
@@ -204,6 +212,43 @@ namespace ComputerAI
                 Console.WriteLine($"\n[💭 Random Thought]");
                 await OutputResponse("Arya", commentary);
             }
+        }
+
+        private static string? TryExecuteAction(string input)
+        {
+            var executor = new ActionExecutor();
+            var lowerInput = input.ToLower();
+
+            // Open application commands
+            if (lowerInput.Contains("open "))
+            {
+                var appName = lowerInput.Replace("open ", "").Trim();
+                var success = executor.OpenApplication(appName);
+                return success ? $"Opening {appName}." : $"Couldn't open {appName}. Sure that exists?";
+            }
+
+            // Search web
+            if (lowerInput.Contains("search for ") || lowerInput.Contains("google "))
+            {
+                var query = lowerInput.Replace("search for ", "").Replace("google ", "").Trim();
+                executor.SearchWeb(query);
+                return $"Googling that for you.";
+            }
+
+            // List files
+            if (lowerInput.Contains("list files") || lowerInput.Contains("what files") || lowerInput.Contains("show files"))
+            {
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                if (lowerInput.Contains("download")) path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                else if (lowerInput.Contains("document")) path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                var files = executor.ListDirectory(path);
+                if (files.Count == 0) return "Empty. Congrats on being organized, I guess.";
+                var fileList = string.Join(", ", files.Take(10));
+                return $"{files.Count} files: {fileList}{(files.Count > 10 ? "..." : "")}";
+            }
+
+            return null; // No action detected, proceed with normal AI response
         }
 
         public static void Cleanup()
